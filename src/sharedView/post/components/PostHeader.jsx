@@ -43,7 +43,7 @@ function PostHeader({post,isLoading,user,id}) {
                 :
 
                     <HStack >
-                        <HStack cursor='pointer' onClick={()=>navigate(`/main/profile/${post?.createdBy}`)} >
+                        <HStack cursor='pointer' onClick={()=>navigate(`/main/profile/${user?.username}`)} >
 
                             <Avatar w='32px'  h='32px'  src={user?.profilePicURL}  />
 
