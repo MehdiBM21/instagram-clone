@@ -40,7 +40,7 @@ function Direct() {
 
     return (
 
-        <VStack w={'full'} h={'full'}>
+        <VStack w={'full'} h={'full'} zIndex={3000}>
             <Box w={'full'} >
                 <DirectNavBar user={userProfile} chatId={id} isLoading={isUserLoading} />
             </Box>
