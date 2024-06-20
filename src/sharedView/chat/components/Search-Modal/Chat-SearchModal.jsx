@@ -58,7 +58,7 @@ function ChatSearchModal({isOpen,onClose}) {
 
         <Modal onClose={handleClose} isOpen={isOpen} isCentered size={{ base: 'full', smd: 'md' }}>
             <ModalOverlay zIndex={2000} bg={'blackAlpha.800'} onClose={handleClose} />
-            <Box zIndex={2000} pos='relative'>
+            <Box zIndex={3000} pos='relative'>
                 <ModalContent h={'430px'} bg={switchMode('#262626', 'white')} borderRadius={'14px'} overflow='hidden'>
                     <Text textAlign={'center'} fontWeight='640' py='10px'>
                         New Message

@@ -119,7 +119,7 @@ function SharePostModal() {
 
 
     const filteredUsers = chattedUsers.filter(user =>
-        user[1].userInfo.username.toLowerCase().includes(searchQuery.toLowerCase())
+        user[1]?.userInfo?.username?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
