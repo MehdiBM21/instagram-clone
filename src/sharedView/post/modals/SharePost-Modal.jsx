@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Badge,
     Box,
@@ -24,7 +24,6 @@ import useSharePost from "../../../hooks/useSharePost.jsx";
 import { IoClose } from "react-icons/io5";
 import SharePostItem from "../components/SharePost-item.jsx";
 import useSliderAlert from "../../../hooks/useSliderAlert.jsx";
-import UserProfileSkeleton from "../../profile/components/UserProfileSkeleton.jsx";
 import useChattedUsers from "../../../hooks/back-end-hooks/useChattedUsers.js";
 import useAuthStore from "../../../store/Backend-stores/authStore.js";
 import { doc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
@@ -33,46 +32,35 @@ import { firestore } from "../../../config/firebase.js";
 function SharePostModal() {
     const { colorMode } = useColorMode();
     const switchMode = (dark, light) => (colorMode === 'dark' ? dark : light);
-    const searchReference = useRef();
+
     const { isOpen, onClose, postId } = useSharePost();
     const { setIsSliderAlertOpen } = useSliderAlert();
     const [isSentLoading, setSentIsLoading] = useState(false);
     const [usersSharedWith, setUsersSharedWith] = useState([]);
     const { chattedUsers, loading } = useChattedUsers(isOpen);
     const authUser = useAuthStore((state) => state.user);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         if (!isOpen) {
             setUsersSharedWith([]);
-            setSearchQuery("");
+            setSearchTerm("");
         }
     }, [isOpen]);
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
-
-
     const sendTo = (value) => {
         setUsersSharedWith((prevState) => {
-            // Check if the user is already in the array
             const userExists = prevState.some(user => user.username === value.username);
-            // If the user does not exist, add them to the array
             if (!userExists) {
                 return [...prevState, value];
             }
-            // If the user already exists, return the previous state unchanged
             return prevState;
         });
     };
 
-
     const removeFromList = (value) => {
         setUsersSharedWith((prevState) => prevState.filter(user => user.username !== value.username));
     };
-
 
     const handleSend = async () => {
         if (usersSharedWith.length > 0) {
@@ -81,7 +69,6 @@ function SharePostModal() {
 
             try {
                 usersSharedWith.map(async (user) => {
-                    // Uncomment and update Firebase code here
                     const chatDocRef = doc(firestore, "chats", user.chatId);
                     await updateDoc(chatDocRef, {
                         messages: arrayUnion({
@@ -103,7 +90,6 @@ function SharePostModal() {
                         },
                         [user.chatId + ".date"]: serverTimestamp(),
                     });
-
                 })
 
                 setIsSliderAlertOpen('true', "Sent");
@@ -116,10 +102,8 @@ function SharePostModal() {
         }
     };
 
-
-
     const filteredUsers = chattedUsers.filter(user =>
-        user[1]?.userInfo?.username?.toLowerCase().includes(searchQuery.toLowerCase())
+        user.userInfo.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -144,7 +128,14 @@ function SharePostModal() {
                                 </WrapItem>
                             ))}
                             <WrapItem flex="1" minW='180px' w='full'>
-                                <Input ref={searchReference} onChange={handleSearch} ml={5} mr={2} placeholder='Search...' variant='unstyled' />
+                                <Input
+                                    ml={5}
+                                    mr={2}
+                                    placeholder='Search...'
+                                    variant='unstyled'
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
                             </WrapItem>
                         </Wrap>
                     </Flex>
@@ -154,23 +145,23 @@ function SharePostModal() {
                             <Center h={'430px'}>
                                 <Spinner />
                             </Center>
-
-                        : (
-                            filteredUsers.length === 0 ? (
-                                <Text fontWeight={'semibold'} px={6}>No user found</Text>
-                            ) : (
-                                filteredUsers.map((user, key) => (
-                                    <SharePostItem
-                                        key={key}
-                                        sendTo={sendTo}
-                                        removeFromList={removeFromList}
-                                        chatId={user[0]}
-                                        uid={user[1].userInfo.uid}
-                                        isChecked={usersSharedWith.some(sharedUser => sharedUser.uid === user[1].userInfo.uid)}
-                                    />
-                                ))
-                            )
-                        )}
+                            : (
+                                filteredUsers.length === 0 ? (
+                                    <Text fontWeight={'semibold'} px={6}>No user found</Text>
+                                ) : (
+                                    filteredUsers.map((user, key) => (
+                                        <SharePostItem
+                                            key={key}
+                                            sendTo={sendTo}
+                                            removeFromList={removeFromList}
+                                            chatId={user.chatId}
+                                            uid={user.userInfo.uid}
+                                            user={user.userInfo}
+                                            isChecked={usersSharedWith.some(sharedUser => sharedUser.uid === user.userInfo.uid)}
+                                        />
+                                    ))
+                                )
+                            )}
                     </ModalBody>
                     <Divider borderColor={switchMode('whiteAlpha.300', 'blackAlpha.300')} />
                     <ModalFooter>
