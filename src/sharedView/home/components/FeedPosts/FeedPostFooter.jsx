@@ -37,7 +37,7 @@ function FeedPostFooter({ doubleClickLike, setDoubleClickLike,id, post, user }) 
     };
 
     useEffect(() => {
-        console.log(doubleClickLike , !isLiked)
+        // console.log(doubleClickLike , !isLiked)
         if (doubleClickLike && !isLiked) {
             handleLikePost()
         }

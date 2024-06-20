@@ -41,9 +41,9 @@ function TabItems() {
 
                     <PathNavItem name='Messages' path={'chat'} icon={<RiSendPlaneLine size={27} strokeWidth={0.2} />} filledIcon={<RiSendPlaneFill size={27}  />}   />
 
-                    <Box display={{base:'none',md:'block'}} >
+                    {/* <Box display={{base:'none',md:'block'}} >
                         <PathNavItem name='Notifications' path={'explore'} icon={  <HeartWithNotification  borderColor={switchMode('black','white')} />} filledIcon={<GoHeartFill size={26}  />} />
-                    </Box>
+                    </Box> */}
 
 
                     <ModalNavItem name='Create' icon={<CgAddR size={27} strokeWidth={0.05} />}    />

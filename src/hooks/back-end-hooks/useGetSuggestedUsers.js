@@ -32,7 +32,7 @@ const useGetSuggestedUsers = () => {
       querySnapshot.forEach((doc) => {
         users.push({...doc.data(), id: doc.id});
       });
-      console.log("DFdff",users)
+      // console.log("DFdff",users)
       setSuggestedUsers(users);
     } catch (error) {
       console.error( error.message);

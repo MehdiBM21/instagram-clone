@@ -19,7 +19,7 @@ function ChatUsersList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log(chats)
+        // console.log(chats)
     }, []);
 
     useEffect(() => {
