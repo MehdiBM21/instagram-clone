@@ -17,7 +17,7 @@ function CreatePostModal({ isOpen, onClose }) {
 
                 <ModalOverlay zIndex={'1500'}  right={0 } />
                 <ModalCloseButton  color={'white'} bg={'transparent'}  display={{base:'none',md:'block'}}   zIndex={'50020'} size={'lg'} right={1} top={1} />
-                <VStack zIndex={'1500'} pos='relative'>
+                <VStack zIndex={'2000'} pos='relative'>
 
                     <ModalContent  maxH={'fit-content'} maxW={'fit-content'}  bg={switchMode('#262626', 'white')}  p='0' borderRadius={'2xl'} >
 
