@@ -39,7 +39,7 @@ function ChatPage() {
 
 
     return (
-        <Flex w={'full'} h={'100vh'}  overflow={'hidden'}>
+        <Flex w={'full'} h={'100dvh'}  overflow={'hidden'}>
             <ChatUsersList />
             <Suspense fallback={<ProgressLoader />} >
                 <Outlet />
