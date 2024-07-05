@@ -21,7 +21,7 @@ This project is an Instagram clone built using React and Firebase. It aims to re
 - Responsive design
 
 ## Demo
-  Check out the live demo [here](https://social-media-ig-project.vercel.app/)
+  Check out the live demo [here](https://social-media-replica.vercel.app)
 
 ## Technologies Used
 - **Frontend**: React
